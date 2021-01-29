@@ -1,0 +1,102 @@
+﻿@model IEnumerable<ProspectManagementTool.Models.Draft>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Draft List</h1>
+
+<p>
+    @if (User.IsInRole("Admin"))
+    {
+    <a asp-action="Create">Create New</a>
+    }
+</p>
+<style type="text/css">
+    .table th, .table td {
+        text-align: center;
+    }
+</style>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DraftName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DraftPosition)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DraftRating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DraftAge)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AttributeID)
+            </th>
+            <th hidden="hidden">
+                @Html.DisplayNameFor(model => model.DraftInitialRating)
+            </th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.TeamID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DraftSelected)
+                </th>
+            }
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderByDescending(i => i.DraftOV).ThenBy(i => i.DraftName))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DraftName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DraftPosition)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DraftRating)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DraftAge)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Attribute.AttributeName)
+                </td>
+                <td hidden="hidden">
+                    @Html.DisplayFor(modelItem => item.DraftInitialRating)
+                </td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        @Html.DropDownList("Teams", ViewBag.TeamID as SelectList, "Undrafted")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(modelItem => item.DraftSelected, new { style = "width:50px" })
+                    </td>
+                }
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+                }
+
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    @if (User.IsInRole("Admin"))
+    {
+        <button type="submit" asp-action="EditAll" class="btn btn-primary" value="Save">Submit Draft</button>
+        <label>Only Click Button When Draft Is Complete!</label>
+    }
+    </div>

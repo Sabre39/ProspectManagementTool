@@ -1,0 +1,110 @@
+﻿@model List<ProspectManagementTool.Models.Team>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Prospect Manager</h1>
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p>*@
+<form asp-action="Index">
+    <style type="text/css">
+        .table th, .table td {
+            text-align: center;
+        }
+    </style>
+    <table class="table">
+        @*<colgroup>
+                <col span="1" />
+                <col width="100" , span="1" />
+                <col span="1" />
+            </colgroup>*@
+        <thead>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderBy(i => i.HockeyTeam))
+            {
+                <tr>
+                    <td class="teamName">
+                        @Html.DisplayFor(Modelitem => item.HockeyTeam) <br />
+                    </td>
+                </tr>
+
+                @if (item.Prospects.Count == 0)
+                {
+                    <tr>
+                        <td>No Prospects</td>
+                    </tr>
+                }
+                else
+                {
+        <tr>
+            <th>
+                <label class="thead-light">Name</label>
+            </th>
+            <th>
+                <label class="thead-light">Position</label>
+            </th>
+            <th>
+                <label class="thead-light">Rating</label>
+            </th>
+            <th>
+                <label class="thead-light">Age</label>
+            </th>
+            <th>
+                <label class="thead-light">Player Type</label>
+            </th>
+            <th>
+                <label class="thead-light">Reroll Rating</label>
+            </th>
+            <th>
+                <label class="thead-light">Initial Rating</label>
+            </th>
+        </tr>
+
+                    @foreach (var prospect in item.Prospects)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@prospect.ID">
+                                    @Html.DisplayFor(model => prospect.ProspectName)
+                                </a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => prospect.ProspectPosition)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => prospect.ProspectRating)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => prospect.ProspectAge)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => prospect.Attribute.AttributeName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => prospect.ProspectRerollRating)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => prospect.ProspectInitialRating)
+                            </td>
+
+                            @*<td>
+                            @if (User.IsInRole("Admin"))
+                            {
+
+                                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> @:|
+                                <a asp-action="Details" asp-route-id="@item.ID">Details</a> @:|
+                                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                            }
+                        </td>*@
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+
+</form>

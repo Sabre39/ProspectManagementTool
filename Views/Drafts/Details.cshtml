@@ -1,0 +1,66 @@
+﻿@model ProspectManagementTool.Models.Draft
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Draft</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DraftName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DraftName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DraftPosition)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DraftPosition)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DraftOV)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DraftOV)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DraftPotential)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DraftPotential)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DraftAge)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DraftAge)
+        </dd>
+        <dt class =" col-sm-2">
+            @Html.DisplayNameFor(model => model.AttributeID)
+        </dt>
+        <dd class=" = col-sm-10">
+            @Html.DisplayFor(model => model.Attribute.AttributeName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DraftInitialRating)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DraftInitialRating)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TeamID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TeamID)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

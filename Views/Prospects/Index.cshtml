@@ -1,0 +1,132 @@
+﻿@model IEnumerable<ProspectManagementTool.Models.Prospect>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Prospects</h1>
+
+<p>
+    @if (User.IsInRole("Admin"))
+    {
+        @:
+        <a asp-action="Create" style="font-weight:bold; text-decoration:underline">Create New Prospect</a>
+    }
+</p>
+<form asp-action="Index">
+    <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
+    <input type="hidden" name="sortField" value="@ViewData["sortField"]" />
+    <div class="form-horizontal">
+        <button class="btn btn-secondary" type="button" data-toggle="collapse" id="filterToggle" data-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+            Filter Controls
+        </button>
+        <div class="collapse @(ViewData["Filtering"])" id="collapseFilter">
+            <div class="card card-body bg-dark border-primary">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Filter by Team:</label>
+                            @Html.DropDownList("TeamID", null, "All Teams", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Filter by Player Type:</label>
+                            @Html.DropDownList("AttributeID", null, "All Player Types", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-6  align-self-end">
+                        <div class="form-group">
+                            <input type="submit" name="actionButton" value="Filter" class="btn btn-outline-light" />
+                            <a asp-action="Index" class="btn btn-outline-light ">Clear</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style type="text/css">
+        .table th, .table td {
+            text-align: center;
+        }
+    </style>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <input type="submit" name="actionButton" value="Team" style="font-weight:bolder" class="btn btn-link" />
+                </th>
+                <th>
+                    <input type="submit" name="actionButton" value="Name" style="font-weight:bolder" class="btn btn-link" />
+                </th>
+                <th>
+                    <input type="submit" name="actionButton" value="Position" style="font-weight:bolder" class="btn btn-link" />
+                </th>
+                <th>
+                    <input type="submit" name="actionButton" value="Rating" style="font-weight:bolder" class="btn btn-link" />
+                </th>
+                <th>
+                    <input type="submit" disabled="disabled" value="Age" style="font-weight:bolder" class="btn btn-link" />
+                </th>
+                <th>
+                    <input type="submit" name="actionButton" value="Player Type" style="font-weight:bolder" class="btn btn-link" />
+                </th>
+                <th>
+                    <input type="submit" name="disabled" value="Rerolls As:" style="font-weight:bolder" class="btn btn-link"/>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Team.HockeyTeam)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.ID">
+                            @Html.DisplayFor(modelItem => item.ProspectName)
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProspectPosition)
+                    </td>
+                    <td hidden="hidden">
+                        @Html.HiddenFor(modelItem => item.ProspectOV)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProspectRating)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProspectAge)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Attribute.AttributeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProspectRerollRating)
+                    </td>
+                    <td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            @:
+                            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> @: |
+                            <a asp-action="Details" asp-route-id="@item.ID">Details</a> @: |
+                            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+@*@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            $('.collapse').collapse()
+        });
+    </script>
+}*@

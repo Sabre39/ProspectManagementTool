@@ -1,0 +1,77 @@
+﻿@model ProspectManagementTool.Models.Draft
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Draft</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="DraftName" class="control-label"></label>
+                <input asp-for="DraftName" class="form-control" />
+                <span asp-validation-for="DraftName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DraftPosition" class="control-label"></label>
+                <select asp-for="DraftPosition" asp-items="Html.GetEnumSelectList<Position>() " class="form-control"><option value="">Select Position</option></select>
+                <span asp-validation-for="DraftPosition" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DraftOV" class="control-label"></label>
+                <input asp-for="DraftOV" class="form-control" maxlength="2" />
+                <span asp-validation-for="DraftOV" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DraftPotential" class="control-label"></label>
+                <select asp-for="DraftPotential" asp-items="Html.GetEnumSelectList<Potential>()" class="form-control"><option value="">Select Potential</option></select>
+                <span asp-validation-for="DraftPotential" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DraftAge" class="control-label"></label>
+                <input asp-for="DraftAge" class="form-control" />
+                <span asp-validation-for="DraftAge" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Attribute" class="control-label">Player Type</label>
+                <select asp-for="AttributeID" class="form-control" asp-items="ViewBag.AttributeID"><option value="">Select Player Type</option></select>
+                <span asp-validation-for="AttributeID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DraftInitialRating" class="control-label"></label>
+                <input asp-for="DraftInitialRating" class="form-control" />
+                <span asp-validation-for="DraftInitialRating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Team" class="control-label"></label>
+                <select asp-for="TeamID" class="form-control" asp-items="ViewBag.TeamID"><option value="">Undrafted</option></select>
+                <span asp-validation-for="TeamID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    $(function () {
+        $("#btnCreate").click(function () {
+            $("#DraftInitialRating").val($("#DraftOV").val() + "/" + $("#DraftPotential option:selected").text());
+        });
+    });
+</script>

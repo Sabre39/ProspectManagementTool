@@ -1,0 +1,128 @@
+﻿@model ProspectManagementTool.Models.Prospect
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Prospect</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ProspectName" class="control-label"></label>
+                <input asp-for="ProspectName" class="form-control" />
+                <span asp-validation-for="ProspectName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProspectPosition" class="control-label"></label>
+                <select id="ProspectPosition" asp-for="ProspectPosition" asp-items="Html.GetEnumSelectList<Position>()" class="form-control"><option value="">Select Position</option></select>
+                <span asp-validation-for="ProspectPosition" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProspectOV" class="control-label"></label>
+                <input id="ProspectOV" asp-for="ProspectOV" class="form-control" maxlength="2" />
+                <span asp-validation-for="ProspectOV" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProspectPotential" class="control-label"></label>
+                <select id="ProspectPotential" asp-for="ProspectPotential" asp-items="Html.GetEnumSelectList<Potential>()" class="form-control"><option value="">Select Potential</option></select>
+                <span asp-validation-for="ProspectPotential" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProspectAge" class="control-label"></label>
+                <input asp-for="ProspectAge" class="form-control" />
+                <span asp-validation-for="ProspectAge" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Attribute" class="control-label">Player Type</label>
+                <select id-="ProspectAttribute" asp-for="AttributeID" class="form-control" asp-items="ViewBag.AttributeID"><option value="">Select Player Type</option></select>
+                <span asp-validation-for="AttributeID" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden="hidden">
+                <label asp-for="ProspectRerollRating" class="control-label"></label>
+                <input id="ProspectRerollRating" asp-for="ProspectRerollRating" class="form-control" />
+                <span asp-validation-for="ProspectRerollRating" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden="hidden">
+                <label asp-for="ProspectInitialRating" class="control-label"></label>
+                <input id="ProspectInitialRating" asp-for="ProspectInitialRating" class="form-control" />
+                <span asp-validation-for="ProspectInitialRating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Team" class="control-label"></label>
+                <select asp-for="TeamID" class="form-control" asp-items="ViewBag.TeamID"><option value="">Select Team</option></select>
+            </div>
+            <div class="form-group" hidden="hidden">
+                <label asp-for="ProspectDraftedBy" class="control-label"></label>
+                <input id="ProspectDraftedBy" asp-for="ProspectDraftedBy" class="form-control" />
+                <span asp-validation-for="ProspectDraftedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input id="btnCreate" type="submit" value="Create" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    $(function () {
+        $("#btnCreate").click(function () {
+            $("#ProspectInitialRating").val($("#ProspectOV").val() + "/" + $("#ProspectPotential option:selected").text());
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $("#btnCreate").click(function () {
+            $("#ProspectRerollRating").val($("#ProspectOV").val() + "/" + $("#ProspectPotential option:selected").text());
+        });
+    });
+</script>
+
+<script>
+    $(function () {
+        $("#btnCreate").click(function () {
+            $("#ProspectDraftedBy").val($("#TeamID option:selected").text());
+        });
+    });
+</script>
+@*<script>
+    $("ProspectPosition").change(function () {
+        if ($("#ProspectPosition").val == "C" || "LW" || "RW" || "W" || "F") {
+            var items = '<option>Select Player Type</option>';
+            $.each(data, function (i, Attribute) {
+                items += "<option value='" + Attribute.Value + "'>" + Attribute.text + "</option>";
+            });
+            $('#ProspectAttribute').html(items);
+        });
+    else if ($("#ProspectPosition").val == "D") {
+        var items = '<option>Select Player Type</option>';
+        $.each(data, function (i, Attributre) {
+            items += "<option value='" + Attribute.Value + "'>" + Attribute.text + "</option>";
+        });
+        $('#ProspectAttribute').html(items);
+    });
+    else {
+        var items = '<option>Select Player Type</option>';
+        $.each(data, function (i, Attributre) {
+            items += "<option value='" + Attribute.Value + "'>" + Attribute.text + "</option>";
+        });
+        $('#ProspectAttribute').html(items);
+    });
+  
+
+</script>*@
+}
